@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     sourceCode.addEventListener('click', () => {
-        window.open('https://t.me/+VmAOJ94rwbkzNzk0', '_blank');
+        window.open('https://t.me/PhoenixofBlack', '_blank');
     });
 
     const generateClientId = () => {
