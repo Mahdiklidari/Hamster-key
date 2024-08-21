@@ -1,306 +1,233 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const games = {
-        1: {
-            name: 'Riding Extreme 3D',
-            appToken: 'd28721be-fd2d-4b45-869e-9f253b554e50',
-            promoId: '43e35910-c168-4634-ad4f-52fd764a843f',
-            timing: 30000, // 30 seconds
-            attempts: 25,
-        },
-        2: {
-            name: 'Chain Cube 2048',
-            appToken: 'd1690a07-3780-4068-810f-9b5bbf2931b2',
-            promoId: 'b4170868-cef0-424f-8eb9-be0622e8e8e3',
-            timing: 30000, // 30 seconds
-            attempts: 20,
-        },
-        3: {
-            name: 'My Clone Army',
-            appToken: '74ee0b5b-775e-4bee-974f-63e7f4d5bacb',
-            promoId: 'fe693b26-b342-4159-8808-15e3ff7f8767',
-            timing: 180000, // 180 seconds
-            attempts: 30,
-        },
-        4: {
-            name: 'Train Miner',
-            appToken: '82647f43-3f87-402d-88dd-09a90025313f',
-            promoId: 'c4480ac7-e178-4973-8061-9ed5b2e17954',
-            timing: 30000, // 30 seconds
-            attempts: 15,
-        },
-        5: {
-            name: 'Merge Away',
-            appToken: '8d1cc2ad-e097-4b86-90ef-7a27e19fb833',
-            promoId: 'dc128d28-c45b-411c-98ff-ac7726fbaea4',
-            timing: 30000, // 30 seconds
-            attempts: 25,
-        },
-        6: {
-            name: 'Twerk Race 3D',
-            appToken: '61308365-9d16-4040-8bb0-2f4a4c69074c',
-            promoId: '61308365-9d16-4040-8bb0-2f4a4c69074c',
-            timing: 30000, // 30 seconds
-            attempts: 20,
-        },
-        7 : {
-        name: 'Polysphere',
-        appToken: '2aaf5aee-2cbc-47ec-8a3f-0962cc14bc71',
-        promoId: '2aaf5aee-2cbc-47ec-8a3f-0962cc14bc71',
-        eventsDelay: 30000, // 30 seconds
-        attempts: 20,
-         }
-    };
+import asyncio
+import os
+import sys
+import httpx
+import random
+import time
+import uuid
+from loguru import logger
 
-    const gameOptions = document.querySelectorAll('.game-option');
-    const keyCountGroup = document.getElementById('keyCountGroup');
-    const keyRange = document.getElementById('keyRange');
-    const keyValue = document.getElementById('keyValue');
-    const startBtn = document.getElementById('startBtn');
-    const keyCountLabel = document.getElementById('keyCountLabel');
-    const progressContainer = document.getElementById('progressContainer');
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    const progressLog = document.getElementById('progressLog');
-    const keyContainer = document.getElementById('keyContainer');
-    const keysList = document.getElementById('keysList');
-    const copyAllBtn = document.getElementById('copyAllBtn');
-    const generatedKeysTitle = document.getElementById('generatedKeysTitle');
-    const copyStatus = document.getElementById('copyStatus');
-    const generateMoreBtn = document.getElementById('generateMoreBtn');
-    const sourceCode = document.getElementById('sourceCode');
+# Disable logging for httpx
+httpx_log = logger.bind(name="httpx").level("WARNING")
+logger.remove()
+logger.add(sink=sys.stdout, format="<white>{time:YYYY-MM-DD HH:mm:ss}</white>"
+                                   " | <level>{level: <8}</level>"
+                                   " | <cyan><b>{line}</b></cyan>"
+                                   " - <white><b>{message}</b></white>")
+logger = logger.opt(colors=True)
 
-    let selectedGame = null;
+games = {
+    1: {
+        'name': 'Riding Extreme 3D',
+        'appToken': 'd28721be-fd2d-4b45-869e-9f253b554e50',
+        'promoId': '43e35910-c168-4634-ad4f-52fd764a843f',
+        'timing': 25000 / 1000,  # in seconds
+        'attempts': 25,
+    },
+    2: {
+        'name': 'Chain Cube 2048',
+        'appToken': 'd1690a07-3780-4068-810f-9b5bbf2931b2',
+        'promoId': 'b4170868-cef0-424f-8eb9-be0622e8e8e3',
+        'timing': 25000 / 1000,
+        'attempts': 20,
+    },
+    3: {
+        'name': 'My Clone Army',
+        'appToken': '74ee0b5b-775e-4bee-974f-63e7f4d5bacb',
+        'promoId': 'fe693b26-b342-4159-8808-15e3ff7f8767',
+        'timing': 180000 / 1000,
+        'attempts': 30,
+    },
+    4: {
+        'name': 'Train Miner',
+        'appToken': '82647f43-3f87-402d-88dd-09a90025313f',
+        'promoId': 'c4480ac7-e178-4973-8061-9ed5b2e17954',
+        'timing': 20000 / 1000,
+        'attempts': 15,
+    },
+    5: {
+        'name': 'Merge Away',
+        'appToken': '8d1cc2ad-e097-4b86-90ef-7a27e19fb833',
+        'promoId': 'dc128d28-c45b-411c-98ff-ac7726fbaea4',
+        'timing': 20000 / 1000,
+        'attempts': 25,
+    },
+    6: {
+        'name': 'Twerk Race 3D',
+        'appToken': '61308365-9d16-4040-8bb0-2f4a4c69074c',
+        'promoId': '61308365-9d16-4040-8bb0-2f4a4c69074c',
+        'timing': 20000 / 1000,
+        'attempts': 20,
+    },
+      7: {
+        'name': 'Polysphere',
+        'appToken': '2aaf5aee-2cbc-47ec-8a3f-0962cc14bc71',
+        'promoId': '2aaf5aee-2cbc-47ec-8a3f-0962cc14bc71',
+        'timing': 20000 / 1000,
+        'attempts': 20,
+    }
+}
 
-    gameOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            gameOptions.forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
-            selectedGame = option.dataset.game;
 
-            keyCountGroup.classList.remove('hidden');
-            startBtn.classList.remove('hidden');
-        });
-    });
+async def load_proxies(file_path):
+    try:
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                proxies = [line.strip() for line in file if line.strip()]
+                random.shuffle(proxies)  # Shuffle proxies to ensure randomness
+                return proxies
+        else:
+            logger.info(f"Proxy file {file_path} not found. No proxies will be used.")
+            return []
+    except Exception as e:
+        logger.error(f"Error reading proxy file {file_path}: {e}")
+        return []
 
-    keyRange.addEventListener('input', () => {
-        keyValue.innerText = keyRange.value;
-    });
 
-    startBtn.addEventListener('click', async () => {
-        const keyCount = parseInt(keyRange.value);
-        if (!selectedGame) {
-            alert('Please select a game first.');
-            return;
-        }
+async def generate_client_id():
+    timestamp = int(time.time() * 1000)
+    random_numbers = ''.join(str(random.randint(0, 9)) for _ in range(19))
+    return f"{timestamp}-{random_numbers}"
 
-        const gameChoice = parseInt(selectedGame);
-        const game = games[gameChoice];
 
-        // Hide the form sections
-        document.querySelector('.grid-container').style.display = 'none';
-        keyCountGroup.style.display = 'none';
+async def login(client_id, app_token, proxies, retries=5):
+    for attempt in range(retries):
+        proxy = random.choice(proxies) if proxies else None
+        async with httpx.AsyncClient(proxies=proxy) as client:
+            try:
+                logger.info(f"Attempting to log in with client ID: {client_id} (Attempt {attempt + 1}/{retries})")
+                response = await client.post(
+                    'https://api.gamepromo.io/promo/login-client',
+                    json={'appToken': app_token, 'clientId': client_id, 'clientOrigin': 'deviceid'}
+                )
+                response.raise_for_status()
+                data = response.json()
+                logger.info(f"Login successful for client ID: {client_id}")
+                return data['clientToken']
+            except httpx.HTTPStatusError as e:
+                logger.error(f"Failed to login (attempt {attempt + 1}/{retries}): {e.response.json()}")
+            except Exception as e:
+                logger.error(f"Unexpected error during login (attempt {attempt + 1}/{retries}): {e}")
+        await asyncio.sleep(2)  # Delay before retrying
+    logger.error("Maximum login attempts reached. Returning None.")
+    return None
 
-        keyCountLabel.innerText = `Number of keys: ${keyCount}`;
 
-        progressBar.style.width = '0%';
-        progressText.innerText = '0%';
-        progressLog.innerText = 'Starting...';
-        progressContainer.classList.remove('hidden');
-        keyContainer.classList.add('hidden');
-        generatedKeysTitle.classList.add('hidden');
-        keysList.innerHTML = '';
-        copyAllBtn.classList.add('hidden');
-        startBtn.classList.add('hidden');
-        startBtn.disabled = true;
+async def emulate_progress(client_token, promo_id, proxies):
+    proxy = random.choice(proxies) if proxies else None
+    logger.info(f"Emulating progress for promo ID: {promo_id}")
+    async with httpx.AsyncClient(proxies=proxy) as client:
+        response = await client.post(
+            'https://api.gamepromo.io/promo/register-event',
+            headers={'Authorization': f'Bearer {client_token}'},
+            json={'promoId': promo_id, 'eventId': str(uuid.uuid4()), 'eventOrigin': 'undefined'}
+        )
+        response.raise_for_status()
+        data = response.json()
+        return data['hasCode']
 
-        let progress = 0;
-        const updateProgress = (increment, message) => {
-            progress += increment;
-            progressBar.style.width = `${progress}%`;
-            progressText.innerText = `${progress}%`;
-            progressLog.innerText = message;
-        };
 
-        const generateKeyProcess = async () => {
-            const clientId = generateClientId();
-            let clientToken;
-            try {
-                clientToken = await login(clientId, game.appToken);
-            } catch (error) {
-                alert(`Failed to login: ${error.message}`);
-                startBtn.disabled = false;
-                return null;
-            }
+async def generate_key(client_token, promo_id, proxies):
+    proxy = random.choice(proxies) if proxies else None
+    logger.info(f"Generating key for promo ID: {promo_id}")
+    async with httpx.AsyncClient(proxies=proxy) as client:
+        response = await client.post(
+            'https://api.gamepromo.io/promo/create-code',
+            headers={'Authorization': f'Bearer {client_token}'},
+            json={'promoId': promo_id}
+        )
+        response.raise_for_status()
+        data = response.json()
+        return data['promoCode']
 
-            for (let i = 0; i < game.attempts; i++) {
-                const hasCode = await emulateProgress(clientToken, game.promoId);
-                updateProgress((100 / game.attempts) / keyCount, `Emulating progress ${i + 1}/${game.attempts}...`);
-                if (hasCode) {
-                    break;
-                }
-                await sleep(game.timing);  // Sleep after each attempt to wait before the next event registration
-            }
 
-            try {
-                const key = await generateKey(clientToken, game.promoId);
-                updateProgress(100 / keyCount, 'Generating key...');
-                return key;
-            } catch (error) {
-                alert(`Failed to generate key: ${error.message}`);
-                return null;
-            }
-        };
+async def generate_key_process(app_token, promo_id, proxies, timing, attempts):
+    client_id = await generate_client_id()
+    logger.info(f"Generated client ID: {client_id}")
+    client_token = await login(client_id, app_token, proxies)
+    if not client_token:
+        logger.error(f"Failed to generate client token for client ID: {client_id}")
+        return None
 
-        const keys = await Promise.all(Array.from({ length: keyCount }, generateKeyProcess));
+    for i in range(attempts):
+        logger.info(f"Emulating progress event {i + 1}/{attempts} for client ID: {client_id}")
+        await asyncio.sleep(timing * (random.random() / 3 + 1))
+        try:
+            has_code = await emulate_progress(client_token, promo_id, proxies)
+        except httpx.HTTPStatusError:
+            logger.warning(f"Event {i + 1}/{attempts} failed for client ID: {client_id}")
+            continue
 
-        if (keys.length > 1) {
-            keysList.innerHTML = keys.filter(key => key).map(key =>
-                `<div class="key-item">
-                    <input type="text" value="${key}" readonly>
-                    <button class="copyKeyBtn" data-key="${key}">Copy Key</button>
-                </div>`
-            ).join('');
-            copyAllBtn.classList.remove('hidden');
-        } else if (keys.length === 1) {
-            keysList.innerHTML =
-                `<div class="key-item">
-                    <input type="text" value="${keys[0]}" readonly>
-                    <button class="copyKeyBtn" data-key="${keys[0]}">Copy Key</button>
-                </div>`;
-        }
+        if has_code:
+            logger.info(f"Progress event triggered key generation for client ID: {client_id}")
+            break
 
-        keyContainer.classList.remove('hidden');
-        generatedKeysTitle.classList.remove('hidden');
+    try:
+        key = await generate_key(client_token, promo_id, proxies)
+        logger.info(f"Generated key: {key} for client ID: {client_id}")
+        return key
+    except httpx.HTTPStatusError as e:
+        logger.error(f"Failed to generate key: {e.response.json()}")
+        return None
 
-        document.querySelectorAll('.copyKeyBtn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const key = event.target.getAttribute('data-key');
-                copyToClipboard(key);
-            });
-        });
 
-        copyAllBtn.addEventListener('click', () => {
-            const keysText = keys.filter(key => key).join('\n');
-            copyToClipboard(keysText);
-        });
+async def spinner_task():
+    spinner = ["|", "/", "-", "\\"]
+    idx = 0
+    while True:
+        sys.stdout.write(f"\rWorking... {spinner[idx]}")
+        sys.stdout.flush()
+        idx = (idx + 1) % len(spinner)
+        await asyncio.sleep(0.1)
 
-        progressBar.style.width = '100%';
-        progressText.innerText = '100%';
-        progressLog.innerText = 'Complete';
 
-        startBtn.classList.remove('hidden');
-        keyCountGroup.classList.remove('hidden');
-        document.querySelector('.grid-container').style.display = 'grid';
-        startBtn.disabled = false;
-    });
+async def main(game_choice, key_count, proxies):
+    game = games[game_choice]
+    logger.info(f"Starting key generation for {game['name']}")
 
-    const generateClientId = () => {
-        const timestamp = Date.now();
-        const randomNumbers = Array.from({ length: 19 }, () => Math.floor(Math.random() * 10)).join('');
-        return `${timestamp}-${randomNumbers}`;
-    };
+    spinner = asyncio.create_task(spinner_task())  # Start the spinner task
 
-    const login = async (clientId, appToken) => {
-        const response = await fetch('https://api.gamepromo.io/promo/login-client', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                appToken,
-                clientId,
-                clientOrigin: 'deviceid'
-            })
-        });
+    tasks = [
+        generate_key_process(
+            game['appToken'],
+            game['promoId'],
+            proxies,
+            game['timing'],
+            game['attempts']
+        )
+        for _ in range(key_count)
+    ]
+    keys = await asyncio.gather(*tasks)
 
-        if (!response.ok) {
-            throw new Error('Failed to login');
-        }
+    spinner.cancel()  # Stop the spinner task
+    sys.stdout.write("\r")  # Clear the spinner line
 
-        const data = await response.json();
-        return data.clientToken;
-    };
+    logger.info(f"Key generation completed for {game['name']}")
+    return [key for key in keys if key], game['name']
 
-    const emulateProgress = async (clientToken, promoId) => {
-        const response = await fetch('https://api.gamepromo.io/promo/register-event', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${clientToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                promoId,
-                eventId: generateUUID(),
-                eventOrigin: 'undefined'
-            })
-        });
 
-        if (!response.ok) {
-            return false;
-        }
+if __name__ == "__main__":
+    print("Select a game:")
+    for key, value in games.items():
+        print(f"{key}: {value['name']}")
+    game_choice = int(input("Enter the game number: "))
+    key_count = int(input("Enter the number of keys to generate: "))
+    proxy_file = input("Enter the proxy file path (leave empty to use 'proxy.txt'): ") or 'proxy.txt'
 
-        const data = await response.json();
-        return data.hasCode;
-    };
+    proxies = asyncio.run(load_proxies(proxy_file))
 
-    const generateKey = async (clientToken, promoId) => {
-        const response = await fetch('https://api.gamepromo.io/promo/create-code', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${clientToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                promoId
-            })
-        });
+    logger.info(
+        f"Generating {key_count} key(s) for {games[game_choice]['name']} using proxies from {proxy_file if proxies else 'no proxies'}")
+    keys, game_name = asyncio.run(main(game_choice, key_count, proxies))
+    if keys:
+        file_name = f"{game_name.replace(' ', '_').lower()}_keys.txt"
+        logger.success(f"Generated Key(s) were successfully saved to {file_name}.")
+        with open(file_name, 'a') as file:  # Open the file in append mode
+            for key in keys:
+                formatted_key = f"{key}"
+                logger.success(formatted_key)
+                file.write(f"{formatted_key}\n")
+    else:
+        logger.error("No keys were generated.")
 
-        if (!response.ok) {
-            throw new Error('Failed to generate key');
-        }
-
-        const data = await response.json();
-        return data.promoCode;
-    };
-
-    const generateUUID = () => {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-            const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    };
-
-    const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-    const copyToClipboard = (text) => {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(() => {
-                copyStatus.classList.remove('hidden');
-                setTimeout(() => copyStatus.classList.add('hidden'), 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-        } else {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.position = 'fixed';
-            textArea.style.top = '0';
-            textArea.style.left = '0';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    copyStatus.classList.remove('hidden');
-                    setTimeout(() => copyStatus.classList.add('hidden'), 2000);
-                }
-            } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
-            }
-
-            document.body.removeChild(textArea);
-        }
-    };
-});
+    input("Press enter to exit")
