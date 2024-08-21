@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hamster Key</title>
+    <title>Hamster Key Generator</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Hamster Key</h1>
+        <h1>Hamster Key Generator</h1>
         <div id="gameSelectContainer" class="grid-container">
             <div class="game-option" data-game="7">
-                <img src="https://raw.githubusercontent.com/Mahdiklidari/Hamster-key/main/image.jpg" alt="Polysphere">
-                <p>Polysphere</p>
+            <img src="https://cdn.hamsterkombat.io/polysphere/image.webp" alt="Polysphere">
+            <p>Polysphere</p>
             </div>
             <div class="game-option" data-game="6">
                 <img src="https://cdn.hamsterkombat.io/twerk/image.webp" alt="Twerk Race 3D">
@@ -42,13 +42,13 @@
         </div>
 
         <div class="form-group hidden" id="keyCountGroup">
-            <label for="keyCountSelect">تعداد کلیدها را انتخاب کنید:</label>
+            <label for="keyCountSelect">Select Number of Keys:</label>
             <div id="keyCountSelect" class="key-slider">
                 <input type="range" min="1" max="10" value="1" id="keyRange">
                 <span id="keyValue">1</span>
             </div>
         </div>
-        <button id="startBtn" class="hidden">ایجاد کلید</button>
+        <button id="startBtn" class="hidden">Generate Keys</button>
 
         <div id="progressContainer" class="hidden">
             <div class="progress-bar">
@@ -59,19 +59,19 @@
         </div>
 
         <div id="keyContainer" class="hidden">
-            <h2 id="generatedKeysTitle" class="hidden">کلیدهای تولید شده</h2>
+            <h2 id="generatedKeysTitle" class="hidden">Generated Keys</h2>
             <div id="keysList"></div>
-            <button id="copyAllBtn" class="hidden">کپی همه کلیدها</button>
+            <button id="copyAllBtn" class="hidden">Copy All Keys</button>
         </div>
 
-        <p id="keyCountLabel">تعداد کلیدها:</p>
+        <p id="keyCountLabel">Number of keys:</p>
 
-        <button id="generateMoreBtn" class="hidden">کلیدهای بیشتری تولید کنید</button>
-        <p id="copyStatus" class="hidden">کلیدها در کلیپ بورد کپی شدند</p>
+        <button id="generateMoreBtn" class="hidden">Generate More Keys</button>
+        <p id="copyStatus" class="hidden">Keys copied to clipboard!</p>
         
         <div class="footer">
-            <p> سلب مسئولیت: ما هیچ تضمینی برای بن نشدن اکانتتون نمیدیم</p>
-            <button id="sourceCode">گروه سازنده</button>
+            <p>Disclaimer: This tool is for educational purposes only. Use responsibly.</p>
+            <button id="sourceCode">Source code</button>
         </div>
     </div>
 
