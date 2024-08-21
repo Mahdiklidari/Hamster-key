@@ -303,9 +303,4 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.removeChild(textArea);
         }
     };
-        <script>
-        document.getElementById("groupButton").onclick = function() {
-            window.open("https://t.me/PhoenixofBlack", "_blank");
-        };
-    </script>
 });
