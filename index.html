@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,14 @@
     <div class="container">
         <h1>Hamster Key</h1>
         <div id="gameSelectContainer" class="grid-container">
+          <div class="game-option" data-game="9">
+            <img src="https://cdn.hamsterkombat.io/mud_racing/image.webp" alt="Polysphere">
+            <p>Mud Racing</p>
+            </div>
+            <div class="game-option" data-game="8">
+            <img src="https://cdn.hamsterkombat.io/mow_trim/image.webp" alt="Polysphere">
+            <p>Mow and Trim</p>
+            </div>
             <div class="game-option" data-game="7">
             <img src="https://cdn.hamsterkombat.io/polysphere/image.webp" alt="Polysphere">
             <p>Polysphere</p>
@@ -42,7 +50,7 @@
         </div>
 
         <div class="form-group hidden" id="keyCountGroup">
-            <label for="keyCountSelect">:تعداد کلیدها را انتخاب کنید</label>
+            <label for="keyCountSelect">انتخاب تعداد کلیدها:</label>
             <div id="keyCountSelect" class="key-slider">
                 <input type="range" min="1" max="10" value="1" id="keyRange">
                 <span id="keyValue">1</span>
@@ -55,7 +63,7 @@
                 <div id="progressBar"></div>
             </div>
             <p id="progressText">0%</p>
-            <p id="progressLog">Starting...</p>
+            <p id="progressLog">شروع...</p>
         </div>
 
         <div id="keyContainer" class="hidden">
@@ -64,13 +72,13 @@
             <button id="copyAllBtn" class="hidden">کپی همه کلیدها</button>
         </div>
 
-        <p id="keyCountLabel">تعداد کلیدها:</p>
+        <p id="keyCountLabel">Number of keys:</p>
 
         <button id="generateMoreBtn" class="hidden">کلیدهای بیشتری تولید کنید</button>
-        <p id="copyStatus" class="hidden">!کلیدها در کلیپ بورد کپی شدند</p>
+        <p id="copyStatus" class="hidden">کلیدها در کلیپ بورد کپی شدند!</p>
         
         <div class="footer">
-            <p>سلب مسئولیت: ما هیچ تعهدی نمیدیم که با این ربات کلیدهایتان را از دست ندهید</p>
+            <p>سلب مسئولیت:ما هیچ تضمینی در قبال استفاده از این سایت نمیدیم </p>
             <button id="sourceCode">گروه سازنده</button>
         </div>
     </div>
