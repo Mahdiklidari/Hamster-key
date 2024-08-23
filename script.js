@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.grid-container').style.display = 'none';
         keyCountGroup.style.display = 'none';
 
-        keyCountLabel.innerText = `Number of keys: ${keyCount}`;
+        keyCountLabel.innerText = `تعداد کلید: ${keyCount}`;
 
         progressBar.style.width = '0%';
         progressText.innerText = '0%';
