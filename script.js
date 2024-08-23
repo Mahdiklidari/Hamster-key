@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         progressBar.style.width = '100%';
         progressText.innerText = '100%';
-        progressLog.innerText = 'Complete';
+        progressLog.innerText = 'کامل';
 
         startBtn.classList.remove('hidden');
         keyCountGroup.classList.remove('hidden');
