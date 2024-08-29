@@ -62,6 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
             promoId: '8814a785-97fb-4177-9193-ca4180ff9da8',
             timing: 20000, // 20 seconds
             attempts: 20,
+        },
+        10: {
+            name: 'Cafe Dash',
+            appToken: 'bc0971b8-04df-4e72-8a3e-ec4dc663cd11',
+            promoId: 'bc0971b8-04df-4e72-8a3e-ec4dc663cd11',
+            timing: 20000, // 20 seconds
+            attempts: 20,
         }
     };
 
@@ -85,6 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let selectedGame = null;
 
+    sourceCode.addEventListener('click', () => {
+        window.open('https://github.com/ShafiqSadat/HamsterKeyGenWeb', '_blank');
+    });
+    
     gameOptions.forEach(option => {
         option.addEventListener('click', () => {
             gameOptions.forEach(opt => opt.classList.remove('selected'));
@@ -114,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.grid-container').style.display = 'none';
         keyCountGroup.style.display = 'none';
 
-        keyCountLabel.innerText = `تعداد کلید: ${keyCount}`;
+        keyCountLabel.innerText = `Number of keys: ${keyCount}`;
 
         progressBar.style.width = '0%';
         progressText.innerText = '0%';
@@ -148,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             for (let i = 0; i < game.attempts; i++) {
                 const hasCode = await emulateProgress(clientToken, game.promoId);
-                updateProgress((100 / game.attempts) / keyCount, `تقلید از پیشرفت ${i + 1}/${game.attempts}...`);
+                updateProgress((100 / game.attempts) / keyCount, `Emulating progress ${i + 1}/${game.attempts}...`);
                 if (hasCode) {
                     break;
                 }
@@ -200,7 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         progressBar.style.width = '100%';
         progressText.innerText = '100%';
-        progressLog.innerText = 'کامل';
+        progressLog.innerText = 'Complete';
 
         startBtn.classList.remove('hidden');
         keyCountGroup.classList.remove('hidden');
@@ -313,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (err) {
                 console.error('Fallback: Oops, unable to copy', err);
             }
-
+            
             document.body.removeChild(textArea);
         }
     };
