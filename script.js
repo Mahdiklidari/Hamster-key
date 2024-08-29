@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (err) {
                 console.error('Fallback: Oops, unable to copy', err);
             }
-            
+
             document.body.removeChild(textArea);
         }
     };
