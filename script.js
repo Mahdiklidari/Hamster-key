@@ -228,7 +228,7 @@ gameOptions.forEach(option => {
 
         progressBar.style.width = '100%';
         progressText.innerText = '100%';
-        progressLog.innerText = 'کامل';
+        progressLog.innerText = 'Complete';
 
         startBtn.classList.remove('hidden');
         keyCountGroup.classList.remove('hidden');
