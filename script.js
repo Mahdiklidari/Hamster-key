@@ -142,11 +142,11 @@ gameOptions.forEach(option => {
         document.querySelector('.grid-container').style.display = 'none';
         keyCountGroup.style.display = 'none';
 
-        keyCountLabel.innerText = `Number of keys: ${keyCount}`;
+        keyCountLabel.innerText = `تعداد کلید: ${keyCount}`;
 
         progressBar.style.width = '0%';
         progressText.innerText = '0%';
-        progressLog.innerText = 'Starting...';
+        progressLog.innerText = 'شروع...';
         progressContainer.classList.remove('hidden');
         keyContainer.classList.add('hidden');
         generatedKeysTitle.classList.add('hidden');
@@ -176,7 +176,7 @@ gameOptions.forEach(option => {
 
             for (let i = 0; i < game.attempts; i++) {
                 const hasCode = await emulateProgress(clientToken, game.promoId);
-                updateProgress((100 / game.attempts) / keyCount, `Emulating progress ${i + 1}/${game.attempts}...`);
+                updateProgress((100 / game.attempts) / keyCount, `تقلید از پیشرفت ${i + 1}/${game.attempts}...`);
                 if (hasCode) {
                     break;
                 }
