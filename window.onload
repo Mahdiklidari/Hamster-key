@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamster key</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        .menu {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .menu h2 {
+            margin-bottom: 20px;
+        }
+        .menu input[type="text"] {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            width: 80%;
+        }
+        .menu button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: #fff;
+            cursor: pointer;
+        }
+        .menu button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu">
+        <h2>برای استفاده از سایت کلید ساز باید در گروه پشتیبانی عضو باشید و کد تاییدیه رو از گروه در اینجا قرار بدید</h2>
+        <input type="text" id="codeInput" placeholder="کد تاییدیه را وارد کنید">
+        <br>
+        <button onclick="joinSupportGroup()">گروه پشتیبانی</button>
+        <button onclick="verifyCode()">تایید کد</button>
+    </div>
+
+    <script>
+        const correctCode = "2356";
+
+        function joinSupportGroup() {
+            window.location.href = "https://t.me/PhoenixofBlack";
+        }
+
+        function verifyCode() {
+            const userCode = document.getElementById("codeInput").value;
+            if (userCode === correctCode) {
+                window.location.href = "https://mahdiklidari.github.io/Hamster-key/";
+            } else {
+                alert("کد تاییدیه اشتباه است.");
+            }
+        }
+    </script>
+</body>
+</html>
