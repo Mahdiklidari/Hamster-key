@@ -11,7 +11,7 @@
             align-items: center;
             height: 100vh;
             background-image: url('https://raw.githubusercontent.com/Mahdiklidari/Hwus/main/IMG_%DB%B2%DB%B0%DB%B2%DB%B4%DB%B0%DB%B9%DB%B0%DB%B1_%DB%B0%DB%B5%DB%B1%DB%B7%DB%B1%DB%B4.jpg');
-            background-size: cover;
+            background-size: cover; /* اضافه کردن این خط */
             font-family: Arial, sans-serif;
             color: white;
             margin: 0;
@@ -76,7 +76,7 @@
 
     <script>
         const correctCode = "3719";
-        const expirationTime = 24 * 60 * 60 * 1000; // 24 ساعت به میلی‌ثانیه
+        const expirationHour = 5.5; // ساعت 5:30 صبح به وقت تهران
 
         function joinSupportGroup() {
             window.location.href = "https://t.me/+VmAOJ94rwbkzNzk0";
@@ -85,9 +85,9 @@
         function validateCode() {
             const userCode = document.getElementById("code").value;
             if (userCode === correctCode) {
-                const now = new Date().getTime();
-                localStorage.setItem("authenticated", "true");
-                localStorage.setItem("timestamp", now);
+                const now = new Date();
+                const expirationDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, expirationHour, 0, 0);
+                document.cookie = `authenticated=true; expires=${expirationDate.toUTCString()}; path=/`;
                 window.location.href = "https://mahdiklidari.github.io/Hamster-key-/";
             } else {
                 alert("رمز اشتباه است");
@@ -95,15 +95,14 @@
         }
 
         window.onload = function() {
-            const authenticated = localStorage.getItem("authenticated");
-            const timestamp = localStorage.getItem("timestamp");
-            const now = new Date().getTime();
+            const authenticated = document.cookie.split('; ').find(row => row.startsWith('authenticated='));
+            const now = new Date();
+            const expirationDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), expirationHour, 0, 0);
 
-            if (authenticated === "true" && timestamp && (now - timestamp < expirationTime)) {
+            if (authenticated && now < expirationDate) {
                 window.location.href = "https://mahdiklidari.github.io/Hamster-key-/";
             } else {
-                localStorage.removeItem("authenticated");
-                localStorage.removeItem("timestamp");
+                document.cookie = "authenticated=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             }
         }
     </script>
