@@ -1,111 +1,168 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود به سایت</title>
+    <title>Hamster Key</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('https://raw.githubusercontent.com/Mahdiklidari/Jsia/main/Yd.jpg');
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            color: white;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
+            padding: 0;
         }
+
         .container {
-            text-align: center;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            width: 90%;
-            max-width: 400px;
-            overflow-wrap: break-word;
-        }
-        .container input[type="text"] {
-            padding: 5px; /* کاهش اندازه padding */
-            margin: 10px 0;
-            width: 80%; /* کاهش عرض */
-            border: none;
-            border-radius: 5px;
-            text-align: center;
-        }
-        .container button {
-            padding: 10px 20px;
-            margin: 10px;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
             width: 100%;
-            max-width: 200px;
+            padding: 20px;
+            box-sizing: border-box;
         }
-        .container button:hover {
-            background-color: #0056b3;
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
         }
-        .text {
-            direction: rtl;
-            text-align: right;
-            margin-bottom: 20px;
+
+        .game-option {
+            text-align: center;
         }
+
+        .game-option img {
+            width: 100%;
+            height: auto;
+        }
+
         @media (max-width: 600px) {
             .container {
-                padding: 15px;
+                padding: 10px;
             }
-            .container input[type="text"], .container button {
-                padding: 8px;
-                margin: 8px 0;
+
+            .grid-container {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             }
+
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #progressBar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, red, yellow, green, cyan, blue, magenta);
+            background-size: 600% 100%;
+            animation: gradient 10s linear infinite;
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 0%; }
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <p class="text">برای ورود به سایت اصلی باید کد ورود را از گروه پشتیبانی در اینجا وارد کنید</p>
-        <input type="text" id="code" placeholder="کد ورود را وارد کنید">
-        <br>
-        <button onclick="joinSupportGroup()">عضویت در گروه پشتیبانی</button>
-        <button onclick="validateCode()">تایید</button>
+        <h1>Hamster Key</h1>
+        <div id="gameSelectContainer" class="grid-container">
+            <div class="game-option" data-game="12">
+                <img src="https://cdn.hamsterkombat.io/fluff/image.webp" alt="Fluff">
+                <p>Fluff Crusade</p>
+            </div>
+            <div class="game-option" data-game="11">
+                <img src="https://cdn.hamsterkombat.io/zoopolis/image.webp" alt="Zoopolis">
+                <p>Zoopolis</p>
+            </div>
+            <div class="game-option" data-game="10">
+                <img src="https://cdn.hamsterkombat.io/tile_trio/image.webp" alt="CafeDash">
+                <p>Tile Trio</p>
+            </div>
+            <div class="game-option" data-game="8">
+                <img src="https://cdn.hamsterkombat.io/mow_trim/image.webp" alt="Polysphere">
+                <p>Mow and Trim</p>
+            </div>
+            <div class="game-option" data-game="7">
+                <img src="https://cdn.hamsterkombat.io/polysphere/image.webp" alt="Polysphere">
+                <p>Polysphere</p>
+            </div>
+            <div class="game-option" data-game="6">
+                <img src="https://cdn.hamsterkombat.io/twerk/image.webp" alt="Twerk Race 3D">
+                <p>Twerk Race 3D</p>
+            </div>
+            <div class="game-option" data-game="5">
+                <img src="https://cdn.hamsterkombat.io/merge_away/image.webp" alt="Merge Away">
+                <p>Merge Away</p>
+            </div>
+            <div class="game-option" data-game="2">
+                <img src="https://cdn.hamsterkombat.io/chain_cube/image.webp" alt="Chain Cube 2048">
+                <p>Chain Cube 2048</p>
+            </div>
+            <div class="game-option" data-game="4">
+                <img src="https://cdn.hamsterkombat.io/train_miner/image.webp" alt="Train Miner">
+                <p>Train Miner</p>
+            </div>
+        </div>
+        <div class="form-group hidden" id="keyCountGroup">
+            <label for="keyCountSelect">انتخاب تعداد کلیدها:</label>
+            <div id="keyCountSelect" class="key-slider">
+                <input type="range" min="1" max="12" value="1" id="keyRange">
+                <span id="keyValue">1</span>
+            </div>
+        </div>
+        <button id="startBtn" class="hidden">ایجاد کلیدها</button>
+
+        <div id="progressContainer" class="hidden">
+            <div class="progress-bar">
+                <div id="progressBar"></div>
+            </div>
+            <p id="progressText">0%</p>
+            <p id="progressLog">شروع...</p>
+        </div>
+
+        <div id="keyContainer" class="hidden">
+            <h2 id="generatedKeysTitle" class="hidden">کلیدهای تولید شده</h2>
+            <div id="keysList"></div>
+            <button id="copyAllBtn" class="hidden">کپی همه کلید</button>
+        </div>
+
+        <p id="keyCountLabel">تعداد کلید:</p>
+
+        <button id="generateMoreBtn" class="hidden">کلیدهای بیشتری تولید کنید</button>
+        <p id="copyStatus" class="hidden">کلیدها در کلیپ بورد کپی شدند!</p>
+        
+        <div class="footer">
+            <p>سلب مسئولیت:ما هیچ تضمینی در قبال استفاده از این سایت نمیدیم </p>
+            <button id="sourceCode">گروه پشتیبانی</button>
+        </div>
     </div>
 
-    <script>
-        const correctCode = "8073";
-        const expirationTime = 24 * 60 * 60 * 1000; // 24 ساعت به میلی‌ثانیه
-
-        function joinSupportGroup() {
-            window.location.href = "https://t.me/+VmAOJ94rwbkzNzk0";
-        }
-
-        function validateCode() {
-            const userCode = document.getElementById("code").value;
-            if (userCode === correctCode) {
-                const now = new Date().getTime();
-                localStorage.setItem("authenticated", "true");
-                localStorage.setItem("timestamp", now);
-                window.location.href = "https://mahdiklidari.github.io/Hamster-key-/";
-            } else {
-                alert("رمز اشتباه است");
-            }
-        }
-
-        window.onload = function() {
-            const authenticated = localStorage.getItem("authenticated");
-            const timestamp = localStorage.getItem("timestamp");
-            const now = new Date().getTime();
-
-            if (authenticated === "true" && timestamp && (now - timestamp < expirationTime)) {
-                window.location.href = "https://mahdiklidari.github.io/Hamster-key-/";
-            } else {
-                localStorage.removeItem("authenticated");
-                localStorage.removeItem("timestamp");
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
