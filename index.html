@@ -54,7 +54,6 @@
             background-color: #eee;
             border-radius: 10px;
             overflow: hidden;
-            position: relative;
         }
 
         #progressBar {
@@ -62,29 +61,13 @@
             width: 0%;
             background: linear-gradient(90deg, red, yellow, green, cyan, blue, magenta);
             background-size: 600% 100%;
-            animation: gradient 10s linear infinite;
+            animation: gradient 5s linear infinite;
             border-radius: 10px;
-            position: absolute;
-            top: 0;
-            left: 0;
         }
 
         @keyframes gradient {
             0% { background-position: 0% 0%; }
             100% { background-position: 100% 0%; }
-        }
-
-        .form-group {
-            margin: 20px 0;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .footer {
-            margin-top: 20px;
-            text-align: center;
         }
     </style>
 </head>
@@ -149,7 +132,7 @@
         <div id="keyContainer" class="hidden">
             <h2 id="generatedKeysTitle" class="hidden">کلیدهای تولید شده</h2>
             <div id="keysList"></div>
-            <button id="copyAllBtn" class="hidden">کپی همه کلید</button>
+            <button id="copyAllBtn" class="hidden">کپی همه کلیدها</button>
         </div>
 
         <p id="keyCountLabel">تعداد کلید:</p>
