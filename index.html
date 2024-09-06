@@ -27,9 +27,9 @@
             overflow-wrap: break-word;
         }
         .container input[type="text"] {
-            padding: 5px; /* کاهش اندازه padding */
+            padding: 5px;
             margin: 10px 0;
-            width: 80%; /* کاهش عرض */
+            width: 80%;
             border: none;
             border-radius: 5px;
             text-align: center;
@@ -53,6 +53,15 @@
             direction: rtl;
             text-align: right;
             margin-bottom: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid white;
+            width: 100%;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white; }
         }
         @media (max-width: 600px) {
             .container {
@@ -67,7 +76,7 @@
 </head>
 <body>
     <div class="container">
-        <p class="text">برای ورود به سایت اصلی باید کد ورود را از گروه پشتیبانی در اینجا وارد کنید</p>
+        <p class="text" id="typeText"></p>
         <input type="text" id="code" placeholder="کد ورود را وارد کنید">
         <br>
         <button onclick="joinSupportGroup()">عضویت در گروه پشتیبانی</button>
@@ -77,6 +86,31 @@
     <script>
         const correctCode = "8134";
         const expirationTime = 24 * 60 * 60 * 1000; // 24 ساعت به میلی‌ثانیه
+        const messagePart1 = "برای ورود به سایت اصلی باید کد ورود را از گروه پشتیبانی در";
+        const messagePart2 = "اینجا وارد کنید";
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < messagePart1.length) {
+                document.getElementById("typeText").innerHTML += messagePart1.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            } else {
+                setTimeout(() => {
+                    document.getElementById("typeText").innerHTML += "<br>";
+                    i = 0;
+                    typeWriterPart2();
+                }, 300); // 300 میلی‌ثانیه توقف
+            }
+        }
+
+        function typeWriterPart2() {
+            if (i < messagePart2.length) {
+                document.getElementById("typeText").innerHTML += messagePart2.charAt(i);
+                i++;
+                setTimeout(typeWriterPart2, 50); // سرعت تایپ همانند خط اول
+            }
+        }
 
         function joinSupportGroup() {
             window.location.href = "https://t.me/+VmAOJ94rwbkzNzk0";
@@ -105,6 +139,7 @@
                 localStorage.removeItem("authenticated");
                 localStorage.removeItem("timestamp");
             }
+            typeWriter();
         }
     </script>
 </body>
